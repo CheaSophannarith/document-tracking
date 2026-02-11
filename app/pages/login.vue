@@ -93,10 +93,16 @@
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">Ministry Accounts:</p>
           <div class="space-y-2 mb-3">
             <button
+              @click="loginAsDemo('minister')"
+              class="w-full text-left px-3 py-2 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-lg text-xs text-slate-700 dark:text-slate-300 hover:from-amber-100 hover:to-orange-100 dark:hover:from-amber-900/30 dark:hover:to-orange-900/30 transition-colors border border-amber-200 dark:border-amber-800"
+            >
+              <span class="font-semibold">Minister (Boss):</span> minister@health.gov.kh / minister123
+            </button>
+            <button
               @click="loginAsDemo('admin')"
               class="w-full text-left px-3 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
             >
-              <span class="font-semibold">Minister:</span> admin@health.gov.kh / admin123
+              <span class="font-semibold">Administrator:</span> admin@health.gov.kh / admin123
             </button>
           </div>
 
@@ -169,12 +175,28 @@ const handleLogin = () => {
 
 const loginAsDemo = (role: string) => {
   const demoUsers = {
-    // Ministry Level
+    // Minister - Executive View
+    minister: {
+      email: 'minister@health.gov.kh',
+      name: 'H.E. Mam Bunheng',
+      nameKh: 'ឯកឧត្តម ម៉ម ប៊ុនហេង',
+      title: 'Minister of Health',
+      titleKh: 'រដ្ឋមន្ត្រីក្រសួងសុខាភិបាល',
+      role: 'Minister',
+      accountType: 'minister',
+      department: null,
+      departmentId: null,
+      office: null,
+      officeId: null,
+      permissions: ['view_strategic', 'view_reports', 'approve_high_level']
+    },
+
+    // Administrator - Full Access
     admin: {
       email: 'admin@health.gov.kh',
-      name: 'Dr. Mam Bunheng',
-      nameKh: 'វេជ្ជបណ្ឌិត ម៉ម ប៊ុនហេង',
-      role: 'Minister',
+      name: 'Dr. Sok Kimheng',
+      nameKh: 'វេជ្ជបណ្ឌិត សុខ គឹមហេង',
+      role: 'Administrator',
       accountType: 'ministry',
       department: null,
       departmentId: null,

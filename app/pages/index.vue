@@ -1,9 +1,46 @@
 <template>
   <MobileLayout>
     <div class="px-4 py-6 lg:px-8 lg:py-8">
-      <!-- Ministry/Department Header -->
+      <!-- Minister Account Dashboard -->
+      <div v-if="user?.accountType === 'minister'" class="space-y-6 mb-6">
+        <!-- Minister Header -->
+        <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 rounded-2xl p-6 text-white shadow-xl">
+          <div class="flex items-start gap-4">
+            <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center">
+              <Icon name="lucide:crown" class="h-7 w-7 text-white" />
+            </div>
+            <div class="flex-1">
+              <span class="px-2 py-1 bg-white/20 rounded-lg text-xs font-mono">MINISTER</span>
+              <h1 class="text-2xl font-bold mt-2">{{ user.name }}</h1>
+              <p class="text-sm text-white/90">{{ user.title }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simple Data Counts -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 text-center">
+            <div class="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-1">6</div>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Departments</p>
+          </div>
+          <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 text-center">
+            <div class="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mb-1">35</div>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Offices</p>
+          </div>
+          <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 text-center">
+            <div class="text-3xl font-bold text-violet-600 dark:text-violet-400 mb-1">328</div>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Staff</p>
+          </div>
+          <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 text-center">
+            <div class="text-3xl font-bold text-orange-600 dark:text-orange-400 mb-1">45M</div>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Budget (USD)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ministry Account (Administrator) Dashboard -->
       <div
-        v-if="user?.accountType === 'ministry' || !user"
+        v-else-if="user?.accountType === 'ministry' || !user"
         class="bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-2xl p-6 mb-6 text-white shadow-xl"
       >
         <div class="flex items-center gap-3">
@@ -63,8 +100,40 @@
           </div>
         </div>
       </div>
-      <!-- Stats Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
+      <!-- Minister Strategic Stats -->
+      <div v-if="user?.accountType === 'minister'" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
+        <StatsCard
+          title="Total Departments"
+          value="6"
+          change="Active"
+          trend="up"
+          icon="building-2"
+        />
+        <StatsCard
+          title="Total Offices"
+          value="35"
+          change="Nationwide"
+          trend="up"
+          icon="briefcase"
+        />
+        <StatsCard
+          title="Total Staff"
+          value="328"
+          change="Healthcare Workers"
+          trend="up"
+          icon="users"
+        />
+        <StatsCard
+          title="Budget 2026"
+          value="$45M"
+          change="+12% YoY"
+          trend="up"
+          icon="dollar-sign"
+        />
+      </div>
+
+      <!-- Regular Stats Grid -->
+      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
         <StatsCard
           title="Total Documents"
           value="1,284"
@@ -95,8 +164,74 @@
         />
       </div>
 
-      <!-- Quick Actions - Ministry Account -->
-      <div v-if="user?.accountType === 'ministry' || !user" class="mb-6 lg:mb-8">
+      <!-- Minister Schedule & Mission -->
+      <div v-if="user?.accountType === 'minister'" class="mb-6 lg:mb-8">
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4">This Week's Schedule</h2>
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6">
+          <div class="space-y-3">
+            <!-- Today -->
+            <div class="flex items-start gap-4 pb-3 border-b border-slate-200 dark:border-slate-800">
+              <div class="w-16 text-center">
+                <div class="text-sm font-bold text-amber-600 dark:text-amber-400">TODAY</div>
+                <div class="text-xs text-slate-600 dark:text-slate-400">Feb 11</div>
+              </div>
+              <div class="flex-1 space-y-2">
+                <div class="flex items-center gap-3 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
+                  <Icon name="lucide:clock" class="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                  <div class="flex-1">
+                    <p class="font-semibold text-sm text-slate-900 dark:text-white">Meeting with Department Directors</p>
+                    <p class="text-xs text-slate-600 dark:text-slate-400">09:00 AM - 11:00 AM</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <Icon name="lucide:users" class="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                  <div class="flex-1">
+                    <p class="font-semibold text-sm text-slate-900 dark:text-white">National Health Policy Review</p>
+                    <p class="text-xs text-slate-600 dark:text-slate-400">02:00 PM - 04:00 PM</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tomorrow -->
+            <div class="flex items-start gap-4 pb-3 border-b border-slate-200 dark:border-slate-800">
+              <div class="w-16 text-center">
+                <div class="text-sm font-bold text-slate-900 dark:text-white">WED</div>
+                <div class="text-xs text-slate-600 dark:text-slate-400">Feb 12</div>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                  <Icon name="lucide:plane" class="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                  <div class="flex-1">
+                    <p class="font-semibold text-sm text-slate-900 dark:text-white">Provincial Hospital Visit - Siem Reap</p>
+                    <p class="text-xs text-slate-600 dark:text-slate-400">Full Day</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Friday -->
+            <div class="flex items-start gap-4">
+              <div class="w-16 text-center">
+                <div class="text-sm font-bold text-slate-900 dark:text-white">FRI</div>
+                <div class="text-xs text-slate-600 dark:text-slate-400">Feb 14</div>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                  <Icon name="lucide:file-text" class="h-5 w-5 text-violet-600 dark:text-violet-400" />
+                  <div class="flex-1">
+                    <p class="font-semibold text-sm text-slate-900 dark:text-white">Budget Report Presentation</p>
+                    <p class="text-xs text-slate-600 dark:text-slate-400">10:00 AM - 12:00 PM</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions - Ministry Account (Administrator) -->
+      <div v-else-if="user?.accountType === 'ministry' || !user" class="mb-6 lg:mb-8">
         <h2 class="text-xl lg:text-2xl font-bold text-slate-900 dark:text-white mb-4 lg:mb-6">Quick Actions</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 lg:gap-4">
           <ActionCard
@@ -179,8 +314,51 @@
         </div>
       </div>
 
-      <!-- Recent Documents -->
-      <div>
+      <!-- Minister - Mission Statement -->
+      <div v-if="user?.accountType === 'minister'">
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Ministry Mission 2026</h2>
+        <div class="bg-gradient-to-r from-blue-500 to-emerald-500 rounded-2xl p-6 text-white shadow-lg mb-6">
+          <div class="flex items-start gap-4">
+            <Icon name="lucide:target" class="h-8 w-8 text-white/90 mt-1" />
+            <div>
+              <p class="text-lg font-medium leading-relaxed">
+                "To provide accessible, quality healthcare services to all citizens of Cambodia, ensuring health equity and promoting wellness through prevention, treatment, and care."
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upcoming Important Events -->
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Upcoming Important Events</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="w-10 h-10 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center">
+                <Icon name="lucide:calendar" class="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+              </div>
+              <div>
+                <p class="font-semibold text-sm text-slate-900 dark:text-white">National Health Conference</p>
+                <p class="text-xs text-slate-600 dark:text-slate-400">February 25, 2026</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+                <Icon name="lucide:award" class="h-5 w-5 text-blue-600 dark:text-blue-400" />
+              </div>
+              <div>
+                <p class="font-semibold text-sm text-slate-900 dark:text-white">Healthcare Excellence Awards</p>
+                <p class="text-xs text-slate-600 dark:text-slate-400">March 10, 2026</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Regular Users - Recent Documents -->
+      <div v-else>
         <div class="flex items-center justify-between mb-4 lg:mb-6">
           <h2 class="text-xl lg:text-2xl font-bold text-slate-900 dark:text-white">Recent Documents</h2>
           <Button variant="ghost" class="text-sm" @click="navigateTo('/documents')">

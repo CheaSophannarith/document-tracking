@@ -14,8 +14,34 @@
       'translate-x-0': mobileOpen
     }"
   >
-    <!-- Logo - Ministry Account -->
-    <div v-if="accountType === 'ministry' || !accountType" class="h-16 flex items-center px-4 lg:px-5 border-b border-slate-200 dark:border-slate-800">
+    <!-- Logo - Minister Account -->
+    <div v-if="accountType === 'minister'" class="h-auto min-h-16 flex items-center px-4 lg:px-5 border-b border-slate-200 dark:border-slate-800 py-3 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20">
+      <div class="flex items-center space-x-3" v-if="!collapsed || mobileOpen">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shadow-amber-500/30">
+          <Icon name="lucide:crown" class="h-5 w-5 text-white" />
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-1 mb-0.5">
+            <span class="px-1.5 py-0.5 bg-amber-200 dark:bg-amber-900/50 rounded text-[9px] font-mono text-amber-800 dark:text-amber-300">MINISTER</span>
+          </div>
+          <span class="block text-sm font-bold text-slate-900 dark:text-white leading-tight">
+            Ministry of Health
+          </span>
+          <span class="block text-[10px] text-slate-600 dark:text-slate-400">
+            ក្រសួងសុខាភិបាល
+          </span>
+        </div>
+      </div>
+      <button
+        @click="toggleSidebar"
+        class="ml-auto p-2 rounded-lg hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors"
+      >
+        <Icon :name="collapsed && !mobileOpen ? 'lucide:chevron-right' : 'lucide:chevron-left'" class="h-5 w-5 text-slate-600 dark:text-slate-400" />
+      </button>
+    </div>
+
+    <!-- Logo - Ministry Account (Administrator) -->
+    <div v-else-if="accountType === 'ministry' || !accountType" class="h-16 flex items-center px-4 lg:px-5 border-b border-slate-200 dark:border-slate-800">
       <div class="flex items-center space-x-3" v-if="!collapsed || mobileOpen">
         <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/30">
           <Icon name="lucide:heart-pulse" class="h-5 w-5 text-white" />
@@ -163,7 +189,43 @@ const route = useRoute()
 const navItems = computed(() => {
   const type = accountType.value
 
-  // Ministry Account - Full Access
+  // Minister Account - Strategic View
+  if (type === 'minister') {
+    return [
+      {
+        name: 'Dashboard',
+        icon: 'lucide:layout-dashboard',
+        path: '/',
+      },
+      {
+        name: 'Strategic Overview',
+        icon: 'lucide:target',
+        path: '/strategic',
+      },
+      {
+        name: 'Departments',
+        icon: 'lucide:building-2',
+        path: '/departments',
+      },
+      {
+        name: 'Key Reports',
+        icon: 'lucide:file-bar-chart',
+        path: '/analytics',
+      },
+      {
+        name: 'Approvals',
+        icon: 'lucide:check-circle',
+        path: '/approvals',
+      },
+      {
+        name: 'Settings',
+        icon: 'lucide:settings',
+        path: '/settings',
+      },
+    ]
+  }
+
+  // Ministry Account - Full Access (Administrator)
   if (type === 'ministry') {
     return [
       {
