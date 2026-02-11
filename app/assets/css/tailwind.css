@@ -1,7 +1,66 @@
 @import 'tailwindcss';
 @import "tw-animate-css";
 
-/* Montserrat Font */
+/* Siemreap Font - Primary font for Khmer text */
+@font-face {
+	font-family: 'Siemreap';
+	src: url('/assets/css/fonts/Siemreap/Siemreap-Regular.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* Battambang Font - Alternative Khmer font */
+@font-face {
+	font-family: 'Battambang';
+	src: url('/assets/css/fonts/Battambang/Battambang-Thin.ttf') format('truetype');
+	font-weight: 100;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Battambang';
+	src: url('/assets/css/fonts/Battambang/Battambang-Light.ttf') format('truetype');
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Battambang';
+	src: url('/assets/css/fonts/Battambang/Battambang-Regular.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Battambang';
+	src: url('/assets/css/fonts/Battambang/Battambang-Bold.ttf') format('truetype');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Battambang';
+	src: url('/assets/css/fonts/Battambang/Battambang-Black.ttf') format('truetype');
+	font-weight: 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* Moul Font - Decorative Khmer font */
+@font-face {
+	font-family: 'Moul';
+	src: url('/assets/css/fonts/Moul/Moul-Regular.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* Montserrat Font - Fallback for English/Latin text */
 @font-face {
 	font-family: 'Montserrat';
 	src: url('/assets/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
@@ -21,7 +80,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-	--font-family-sans: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+	--font-family-sans: 'Siemreap', 'Battambang', 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+	--font-family-khmer: 'Siemreap', 'Battambang', sans-serif;
+	--font-family-khmer-display: 'Moul', 'Siemreap', sans-serif;
 	--radius-sm: calc(var(--radius) - 4px);
 	--radius-md: calc(var(--radius) - 2px);
 	--radius-lg: var(--radius);
@@ -140,7 +201,7 @@
 	}
 	body {
 		@apply bg-background text-foreground font-sans;
-		font-family: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+		font-family: 'Siemreap', 'Battambang', 'Montserrat', ui-sans-serif, system-ui, sans-serif;
 	}
 }
 
@@ -189,5 +250,30 @@
 
   .dark .scrollbar-thin {
     scrollbar-color: oklch(0.556 0 0 / 30%) transparent;
+  }
+
+  /* Khmer Font Utilities */
+  .font-siemreap {
+    font-family: 'Siemreap', sans-serif;
+  }
+
+  .font-battambang {
+    font-family: 'Battambang', sans-serif;
+  }
+
+  .font-moul {
+    font-family: 'Moul', sans-serif;
+  }
+
+  .font-khmer {
+    font-family: 'Siemreap', 'Battambang', sans-serif;
+  }
+
+  .font-khmer-display {
+    font-family: 'Moul', 'Siemreap', sans-serif;
+  }
+
+  .font-english {
+    font-family: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
   }
 }

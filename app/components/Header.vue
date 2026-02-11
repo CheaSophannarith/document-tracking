@@ -42,12 +42,6 @@
         <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
       </button>
 
-      <!-- Upload Button -->
-      <Button class="gap-2 text-sm lg:text-base" @click="navigateTo('/upload')">
-        <Icon name="lucide:plus" class="h-4 w-4" />
-        <span class="hidden sm:inline">Upload</span>
-      </Button>
-
       <!-- User Menu -->
       <div class="relative">
         <button

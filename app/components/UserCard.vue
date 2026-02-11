@@ -29,7 +29,7 @@
             class="flex-shrink-0 ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
             :class="getRoleBadgeClass(user.role)"
           >
-            {{ user.role }}
+            {{ user.roleKh || user.role }}
           </span>
         </div>
 
@@ -92,6 +92,7 @@ defineProps<{
     nameKh: string
     email: string
     role: string
+    roleKh?: string
     department: string
     permissions: string[]
     status: string
@@ -109,7 +110,15 @@ const getRoleBadgeClass = (role: string) => {
   const classes: Record<string, string> = {
     'Administrator': 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300',
     'Department Head': 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300',
+    'Department Director': 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300',
+    'Deputy Department Director': 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300',
+    'Office Chief': 'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300',
+    'Deputy Office Chief': 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300',
+    'Senior Officer': 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300',
     'Officer': 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300',
+    'Coordinator': 'bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300',
+    'Administrative Officer': 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300',
+    'Technical Staff': 'bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300',
     'Viewer': 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300',
   }
   return classes[role] || 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'

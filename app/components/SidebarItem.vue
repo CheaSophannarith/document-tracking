@@ -1,8 +1,9 @@
 <template>
   <NuxtLink
     :to="item.path"
-    class="group relative flex items-center px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200"
+    class="group relative flex items-center rounded-xl text-sm font-medium transition-all duration-200"
     :class="[
+      collapsed ? 'justify-center px-2.5 py-2.5' : 'px-3 py-2.5',
       isActive
         ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/30'
         : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100',
@@ -10,20 +11,20 @@
   >
     <!-- Active Indicator -->
     <div
-      v-if="isActive"
+      v-if="isActive && !collapsed"
       class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-white rounded-r-full"
     ></div>
 
     <Icon
       :name="item.icon"
-      class="h-5 w-5 flex-shrink-0 transition-all duration-200"
+      class="flex-shrink-0 transition-all duration-200"
       :class="[
-        isActive ? 'text-white scale-110' : 'text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200 group-hover:scale-110',
-        collapsed ? '' : 'mr-3',
+        collapsed ? 'h-5 w-5' : 'h-5 w-5 mr-3',
+        isActive ? 'text-white' : 'text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200',
       ]"
     />
 
-    <span v-if="!collapsed" class="flex-1 truncate">{{ item.name }}</span>
+    <span v-if="!collapsed" class="flex-1 truncate font-khmer">{{ item.name }}</span>
 
     <span
       v-if="item.badge && !collapsed"
@@ -40,7 +41,7 @@
     <!-- Tooltip for collapsed state -->
     <div
       v-if="collapsed"
-      class="absolute left-full ml-2 px-3 py-2 bg-slate-900 dark:bg-slate-700 text-white text-xs rounded-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200 z-50 shadow-xl"
+      class="absolute left-full ml-3 px-3 py-2 bg-slate-900 dark:bg-slate-700 text-white text-sm rounded-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200 z-50 shadow-xl font-khmer"
     >
       {{ item.name }}
       <span v-if="item.badge" class="ml-2 px-1.5 py-0.5 bg-blue-500 rounded text-[10px]">{{ item.badge }}</span>
@@ -52,6 +53,7 @@
 defineProps<{
   item: {
     name: string
+    nameEn?: string
     icon: string
     path: string
     badge?: string

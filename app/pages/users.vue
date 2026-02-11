@@ -56,6 +56,14 @@
           @delete="deleteUser"
         />
       </div>
+
+      <!-- Add User Modal -->
+      <AddUserModal
+        v-model="showAddUserModal"
+        account-type="ministry"
+        :departments="departments"
+        @add-user="handleAddUser"
+      />
     </div>
   </MobileLayout>
 </template>
@@ -170,11 +178,68 @@ const users = ref([
   },
 ])
 
+// Department data for the modal
+const departments = ref([
+  {
+    id: 1,
+    name: 'Department of Hospital Services',
+    nameKh: 'នាយកដ្ឋានសេវាមន្ទីរពេទ្យ',
+  },
+  {
+    id: 2,
+    name: 'Department of Preventive Medicine',
+    nameKh: 'នាយកដ្ឋានវេជ្ជសាស្រ្តបង្ការ',
+  },
+  {
+    id: 3,
+    name: 'Department of Drugs and Food',
+    nameKh: 'នាយកដ្ឋានឱសថ និងអាហារ',
+  },
+  {
+    id: 4,
+    name: 'Department of Planning and Health Information',
+    nameKh: 'នាយកដ្ឋានផែនការ និងព័ត៌មានសុខាភិបាល',
+  },
+  {
+    id: 5,
+    name: 'Department of Personnel',
+    nameKh: 'នាយកដ្ឋានបុគ្គលិក',
+  },
+  {
+    id: 6,
+    name: 'Department of Finance',
+    nameKh: 'នាយកដ្ឋានហិរញ្ញវត្ថុ',
+  },
+])
+
 const editUser = (user: any) => {
   console.log('Edit user:', user)
 }
 
 const deleteUser = (userId: number) => {
   console.log('Delete user:', userId)
+}
+
+// Handle adding new user
+const handleAddUser = (userData: any) => {
+  const department = departments.value.find(d => d.id === userData.departmentId)
+
+  const newUser = {
+    id: users.value.length + 100,
+    name: userData.name,
+    nameKh: userData.nameKh,
+    email: userData.email,
+    role: userData.roleDisplay.en,
+    roleKh: userData.roleDisplay.kh,
+    department: department?.name || '',
+    departmentKh: department?.nameKh || '',
+    permissions: userData.permissions,
+    status: userData.status,
+    avatar: userData.avatar,
+    lastActive: userData.lastActive,
+  }
+
+  users.value.unshift(newUser)
+  console.log('New user added:', newUser)
 }
 </script>

@@ -63,10 +63,12 @@
       <!-- Department Staff (Direct) -->
       <div class="mb-6">
         <div class="flex items-center justify-between mb-4">
-          <h2 class="text-xl font-bold text-slate-900 dark:text-white">Department Staff</h2>
-          <Button variant="outline" size="sm" class="gap-2">
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white">
+            បុគ្គលិកនាយកដ្ឋាន / Department Staff
+          </h2>
+          <Button variant="outline" size="sm" class="gap-2" @click="showAddStaffModal = true">
             <Icon name="lucide:user-plus" class="h-4 w-4" />
-            Add Staff
+            បន្ថែមបុគ្គលិក / Add Staff
           </Button>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -77,6 +79,15 @@
           />
         </div>
       </div>
+
+      <!-- Add Staff Modal -->
+      <AddUserModal
+        v-model="showAddStaffModal"
+        account-type="department"
+        :current-department-id="1"
+        :offices="offices"
+        @add-user="handleAddStaff"
+      />
 
       <!-- Documents Section -->
       <div>
@@ -124,6 +135,7 @@
 
 <script setup lang="ts">
 const showAddOffice = ref(false)
+const showAddStaffModal = ref(false)
 const showAllDepartments = ref(false)
 const selectedDepartmentFilter = ref('')
 
@@ -307,4 +319,25 @@ const filteredDocuments = computed(() => {
     return allDocuments.value
   }
 })
+
+// Handle adding new staff
+const handleAddStaff = (userData: any) => {
+  const newStaff = {
+    id: departmentStaff.value.length + 100,
+    name: userData.name,
+    nameKh: userData.nameKh,
+    email: userData.email,
+    role: userData.roleDisplay.en,
+    roleKh: userData.roleDisplay.kh,
+    department: 'Department of Hospital Services',
+    office: userData.officeId ? offices.value.find(o => o.id === userData.officeId)?.name : null,
+    permissions: userData.permissions,
+    status: userData.status,
+    avatar: userData.avatar,
+    lastActive: userData.lastActive,
+  }
+
+  departmentStaff.value.push(newStaff)
+  console.log('New staff added:', newStaff)
+}
 </script>
